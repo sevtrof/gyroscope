@@ -57,7 +57,13 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    _listenToGyroscope();
+    _startGyroscope();
+  }
+
+  @override
+  void dispose() {
+    _stopGyroscope();
+    super.dispose();
   }
 
   void _incrementCounter() {
@@ -66,12 +72,16 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  Future<void> _listenToGyroscope() async {
+  Future<void> _startGyroscope() async {
     await gyroscopeSensor.subscribe((GyroscopeData data) {
       setState(() {
         _gyroscopeData = data;
       });
     });
+  }
+
+  Future<void> _stopGyroscope() async {
+    await gyroscopeSensor.unsubscribe();
   }
 
   @override
