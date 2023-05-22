@@ -1,10 +1,14 @@
 import 'dart:async';
+
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:gyro_project/gyroscope.dart';
-import 'package:gyro_project/src/gyroscope_sensor_interface.dart';
+import 'package:gyro_project/src/common/exceptions.dart';
+import 'package:gyro_project/src/common/sensor.dart';
+import 'package:gyro_project/src/common/utils/sample_rate.dart';
+import 'package:gyro_project/src/gyro/data/gyroscope_data.dart';
+import 'package:gyro_project/src/gyro/gyroscope_sensor_interface.dart';
 
-class GyroscopeSensorImpl implements GyroscopeSensorInterface {
+class GyroscopeSensorImpl implements Sensor {
   static const MethodChannel _channel = MethodChannel('gyroscopeMethod');
   static const EventChannel _eventChannel = EventChannel('gyroscope');
   StreamSubscription<GyroscopeData>? _subscription;

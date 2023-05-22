@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'gyroscope.dart';
+import 'src/gyro/gyroscope.dart';
+import 'src/motion/motion.dart';
 
 void main() {
   runApp(const MyApp());
@@ -52,17 +53,21 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   final GyroscopeSensorImpl gyroscopeSensor = GyroscopeSensorImpl();
+  final MotionSensorImpl motionSensor = MotionSensorImpl();
   GyroscopeData? _gyroscopeData;
+  MotionData? _motionData;
 
   @override
   void initState() {
     super.initState();
     _startGyroscope();
+    _startMotion();
   }
 
   @override
   void dispose() {
     _stopGyroscope();
+    _stopMotion();
     super.dispose();
   }
 
@@ -82,6 +87,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _stopGyroscope() async {
     await gyroscopeSensor.unsubscribe();
+  }
+
+  Future<void> _startMotion() async {
+    await motionSensor.subscribe((MotionData data) {
+      setState(() {
+        _motionData = data;
+      });
+    });
+  }
+
+  Future<void> _stopMotion() async {
+    await motionSensor.unsubscribe();
   }
 
   @override
@@ -106,6 +123,13 @@ class _MyHomePageState extends State<MyHomePage> {
               Text('X: ${_gyroscopeData!.azimuth}'),
               Text('Y: ${_gyroscopeData!.pitch}'),
               Text('Z: ${_gyroscopeData!.roll}'),
+            ],
+            const SizedBox(height: 10,),
+            if (_motionData != null) ...[
+              const Text('Motion Data:'),
+              Text('Azimuth angle: ${_motionData!.gravityX}'),
+              Text('Pitch angle: ${_motionData!.gravityY}'),
+              Text('Roll angle: ${_motionData!.gravityZ}'),
             ],
           ],
         ),

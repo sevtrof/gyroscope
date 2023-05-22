@@ -5,8 +5,6 @@ class Gyroscope {
   static const EventChannel _channel = EventChannel('gyroscope');
   Stream<GyroscopeData>? _stream;
 
-
-
   Stream<GyroscopeData> get events {
     _stream ??= _channel.receiveBroadcastStream().map((dynamic event) {
       final Map<dynamic, dynamic> map = event;

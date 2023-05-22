@@ -2,20 +2,26 @@ PODS:
   - Flutter (1.0.0)
   - gyroscope (0.0.1):
     - Flutter
+  - motion (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - gyroscope (from `.symlinks/plugins/gyroscope/ios`)
+  - motion (from `.symlinks/plugins/motion/ios`)
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
   gyroscope:
     :path: ".symlinks/plugins/gyroscope/ios"
+  motion:
+    :path: ".symlinks/plugins/motion/ios"
 
 SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   gyroscope: 84db4cf26ec1f0b622eee17463f1a765fb30abfe
+  motion: 7d1c5f43746c331d68d9239cc47b795e48b20fa9
 
 PODFILE CHECKSUM: ef19549a9bc3046e7bb7d2fab4d021637c0c58a3
 
