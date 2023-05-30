@@ -2,15 +2,24 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 
 class Gyroscope {
-  static const EventChannel _channel = EventChannel('gyroscope');
+  static const EventChannel _eventChannel = EventChannel('gyroscope');
+  static const MethodChannel _methodChannel = MethodChannel('gyroscopeMethod');
   Stream<GyroscopeData>? _stream;
 
   Stream<GyroscopeData> get events {
-    _stream ??= _channel.receiveBroadcastStream().map((dynamic event) {
+    _stream ??= _eventChannel.receiveBroadcastStream().map((dynamic event) {
       final Map<dynamic, dynamic> map = event;
       return GyroscopeData(map['x'] as double, map['y'] as double, map['z'] as double);
     });
     return _stream!;
+  }
+
+  Future<void> start({double rate = 0.1}) async {
+    await _methodChannel.invokeMethod('start', {'rate': rate});
+  }
+
+  Future<void> stop() async {
+    await _methodChannel.invokeMethod('stop');
   }
 }
 

@@ -19,12 +19,11 @@ class MotionPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, EventChanne
   private var motionListener: SensorEventListener? = null
   private var motionSensor: Sensor? = null
 
-
-  override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-    sensorManager = flutterPluginBinding.applicationContext.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+  override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
+    sensorManager = binding.applicationContext.getSystemService(Context.SENSOR_SERVICE) as SensorManager
     motionSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY)
-    MethodChannel(flutterPluginBinding.binaryMessenger, "motionMethodChannel").setMethodCallHandler(this)
-    EventChannel(flutterPluginBinding.binaryMessenger, "motionEventChannel").setStreamHandler(this)
+    methodChannel = MethodChannel(binding.binaryMessenger, "motionMethodChannel")
+    eventChannel = EventChannel(binding.binaryMessenger, "motionEventChannel")
 
     methodChannel.setMethodCallHandler(this)
     eventChannel.setStreamHandler(this)
